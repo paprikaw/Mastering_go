@@ -12,22 +12,16 @@ func main() {
 		fmt.Println("Need one or more arguments!")
 		return
 	}
-
+	isMeaningful := false
 	var min, max float64
 	for i := 1; i < len(arguments); i++ {
 		n, err := strconv.ParseFloat(arguments[i], 64)
-		if err != nil {
-			continue
-		}
-
-		// As pointed out by a reader of the book:
-		//
-		// When the first argument is non-parseable, the `min/max` variables are not initialized
-		// to the first parseable argument (but to `0` by default).
-		// This would lead to bug when all the parseable arguments share the same sign.
-		if i == 1 {
+		if !isMeaningful && err == nil {
+			isMeaningful = true
 			min = n
 			max = n
+		}
+		if err != nil {
 			continue
 		}
 
@@ -37,6 +31,12 @@ func main() {
 		if n > max {
 			max = n
 		}
+	}
+
+	// 如果用户没有包括任何的有意义的数字
+	if !isMeaningful {
+		fmt.Println("Please include as least one number in the argument")
+		return
 	}
 
 	fmt.Println("Min:", min)

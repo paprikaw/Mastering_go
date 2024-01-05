@@ -12,7 +12,7 @@ func main() {
 		return
 	}
 	argument := os.Args[1]
-
+	
 	// With expression after switch
 	switch argument {
 	case "0":
